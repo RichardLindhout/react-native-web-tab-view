@@ -15,7 +15,7 @@ yarn add https://github.com/RichardLindhout/react-native-web-tab-view
 
 Example code
 
-```
+```jsx
 import React, { Component } from 'react'
 import { TabView, TabBar } from 'react-native-web-tab-view'
 import widthAndHeightHOC from '../WidthAndHeight/widthAndHeightHOC'
