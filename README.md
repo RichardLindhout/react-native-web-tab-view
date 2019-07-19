@@ -14,6 +14,12 @@ Follow instructions for a working native variant at: https://github.com/react-na
 `yarn add react-id-swiper@latest swiper@latest`
 `yarn add https://github.com/RichardLindhout/react-native-web-tab-view`
 
+Add this to your public/index.html
+```<link rel="stylesheet" href="%PUBLIC_URL%/swiper.min.css">```
+
+And download https://github.com/nolimits4web/swiper/blob/Swiper3/dist/css/swiper.min.css to your public map
+
+
 
 Example code
 
