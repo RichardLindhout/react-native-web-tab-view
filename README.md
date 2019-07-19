@@ -41,7 +41,7 @@ class Example extends Component {
         scrollEnabled
         labelStyle={{ color: '#FFF' }}
         indicatorStyle={{ backgroundColor: '#FFF' }}
-        style={{ backgroundColor: c.greenColor }}
+        style={{ backgroundColor: 'blue' }}
         tabStyle={{ width: 'auto' }}
         renderLabel={({ route, focused, color }) => (
           <Text style={{ color, margin: 8 }}>
