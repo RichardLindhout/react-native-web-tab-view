@@ -10,7 +10,7 @@ Follow instructions for a working native variant at: https://github.com/react-na
 
 ## react-native-web-tab-view
 
-yarn add https://github.com/RichardLindhout/react-native-web-tab-view
+`yarn add https://github.com/RichardLindhout/react-native-web-tab-view`
 
 
 Example code
