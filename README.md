@@ -36,9 +36,13 @@ class Example extends Component {
     routes,
   }
 
-  _renderScene = ({ route }) => {
+  _renderScene = ({ route, jumpTo }) => {
     return (
-      <route.component key={route.key} componentId={this.props.componentId} />
+      <route.component
+        key={route.key}
+        componentId={this.props.componentId}
+        jumpTo={jumpTo}
+      />
     )
   }
 
