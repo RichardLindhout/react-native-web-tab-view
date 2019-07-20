@@ -13,7 +13,8 @@ Please do a pull request for missing features.
 Follow instructions for a working native variant at: https://github.com/react-native-community/react-native-tab-view
 
 ## react-native-web-tab-view
-`yarn add react-id-swiper@latest swiper@latest`
+`yarn add react-id-swiper@latest swiper@latest`   
+
 `yarn add https://github.com/RichardLindhout/react-native-web-tab-view`
 
 Add this to your public/index.html
