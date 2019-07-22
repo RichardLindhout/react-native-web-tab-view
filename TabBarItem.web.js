@@ -25,9 +25,9 @@ export default class TabBarItem extends React.Component {
       onLayout,
       onPress,
       onLongPress,
+      tabIndex,
     } = this.props
 
-    const tabIndex = navigationState.routes.indexOf(route)
     const isFocused = navigationState.index === tabIndex
 
     const activeOpacity = 1
@@ -147,7 +147,6 @@ export default class TabBarItem extends React.Component {
             {badge != null ? <View style={styles.badge}>{badge}</View> : null}
           </View>
         </TouchableOpacity>
-        {isFocused && this.props.bottom}
       </View>
     )
   }
@@ -167,6 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     minHeight: 48,
+    position: 'relative',
   },
   badge: {
     position: 'absolute',

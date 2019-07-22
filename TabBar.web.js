@@ -1,17 +1,8 @@
 import * as React from 'react'
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  // StyleProp,
-  // ViewStyle,
-  // TextStyle,
-  // LayoutChangeEvent,
-  // I18nManager,
-  // Platform,
-} from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import TabBarItem from './TabBarItem.web'
 import TabBarIndicator from './TabBarIndicator.web'
+import Swiper from './Swiper'
 
 export default class TabBar extends React.Component {
   static defaultProps = {
@@ -29,12 +20,24 @@ export default class TabBar extends React.Component {
     renderIndicator: props => <TabBarIndicator {...props} />,
   }
 
+  _onRef = node => {
+    if (node) {
+      this.swiper = node.swiper
+    }
+  }
+  componentDidUpdate() {
+    if (this.swiper && this.props.tabViewRef) {
+      this.props.tabViewRef.controller.control = this.swiper
+      this.swiper.controller.control = this.props.tabViewRef
+    }
+  }
+
   render() {
     const {
       position,
       navigationState,
       scrollEnabled,
-      bounces,
+      // bounces,
       getAccessibilityLabel,
       getAccessible,
       getLabelText,
@@ -50,74 +53,94 @@ export default class TabBar extends React.Component {
       onTabLongPress,
       tabStyle,
       labelStyle,
-      indicatorStyle,
-      contentContainerStyle,
+      // indicatorStyle,
       style,
     } = this.props
     const { routes } = navigationState
 
+    const swiperParams = {
+      slidesPerView: scrollEnabled ? 'auto' : routes.length,
+      // paginationClickable: true,
+      spaceBetween: 0,
+      // freeMode: true,
+      // loop: false,
+      preventClicksPropagation: false,
+      preventClicks: false,
+      touchStartPreventDefault: false,
+      // grabCursor: true,
+      watchSlidesProgress: true,
+      slideClass: 'swiper-tab-item',
+      // renderProgressbar: function(progressbarFillClass) {
+      //   return this.props.renderIndicator({
+      //     style: indicatorStyle,
+      //   })
+      // },
+      // on: {
+      //   progress: function(progress, second) {
+      //     // var swiper = this
+      //     // console.log(progress, second)
+      //     // var slideProgress = swiper.progress
+      //     // console.log(slideProgress)
+      //     // console.log(activeSlide)
+      //     // console.log('ACTIVE SLIDE', activeSlide.offsetLeft)
+      //     // for (var i = 0; i < swiper.slides.length; i++) {
+      //     //   console.log(swiper.slides[i])
+      //     //   const offset =
+      //     //     window.innerWidth -
+      //     //     (swiper.slides[i].getBoundingClientRect().left +
+      //     //       swiper.slides[i].offsetWidth)
+      //     //   console.log(swiper.width, 'swiper width')
+      //     //   console.log(offset)
+      //     //   // var slideProgress = swiper.slides[i].progress
+      //     //   // var innerOffset = swiper.width * 1.9
+      //     //   // var innerTranslate = slideProgress * innerOffset
+      //     //   // console.log(slideProgress)
+      //     //   // console.log('inner translate', innerTranslate)
+      //     //   // swiper.slides[i].querySelector('.slide-inner').style.transform =
+      //     //   //   'translate3d(' + innerTranslate + 'px, 0, 0)'
+      //     // }
+      //   },
+      // },
+
+      // onTab: function(swiper) {
+      //   // var n = swiper1.clickedIndex;
+      //   alert(1)
+      // },
+    }
+
+    // console.log('NAVIGATIONSTATE',navigationState.index)
     return (
       <View style={[styles.tabBar, style]}>
-        <ScrollView
-          horizontal
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled={scrollEnabled}
-          bounces={bounces}
-          alwaysBounceHorizontal={false}
-          scrollsToTop={false}
-          showsHorizontalScrollIndicator={false}
-          automaticallyAdjustContentInsets={false}
-          overScrollMode="never"
-          contentContainerStyle={[
-            styles.tabContent,
-            // scrollEnabled
-            //   ? { width: tabBarWidth || tabBarWidthPercent }
-            //   : styles.container,
-            contentContainerStyle,
-          ]}
-          scrollEventThrottle={16}
-          // onScroll={Animated.event([
-          //   {
-          //     nativeEvent: {
-          //       contentOffset: { x: this.scrollAmount },
-          //     },
-          //   },
-          // ])}
-          ref={el => {
-            // @ts-ignore
-            this.scrollView = el
-          }}
-        >
-          {routes.map(route => (
-            <TabBarItem
-              key={route.key}
-              position={position}
-              route={route}
-              navigationState={navigationState}
-              getAccessibilityLabel={getAccessibilityLabel}
-              getAccessible={getAccessible}
-              getLabelText={getLabelText}
-              getTestID={getTestID}
-              renderBadge={renderBadge}
-              renderIcon={renderIcon}
-              renderLabel={renderLabel}
-              activeColor={activeColor}
-              inactiveColor={inactiveColor}
-              pressColor={pressColor}
-              pressOpacity={pressOpacity}
-              onPress={() => {
-                onTabPress && onTabPress({ route })
-                this.props.jumpTo(route.key)
-              }}
-              onLongPress={() => onTabLongPress && onTabLongPress({ route })}
-              labelStyle={labelStyle}
-              style={tabStyle}
-              bottom={this.props.renderIndicator({
-                style: indicatorStyle,
-              })}
-            />
+        <Swiper params={swiperParams} ref={this._onRef}>
+          {routes.map((route, tabIndex) => (
+            <div key={route.key} className="swiper-tab-item">
+              <TabBarItem
+                tabIndex={tabIndex}
+                position={position}
+                route={route}
+                navigationState={navigationState}
+                getAccessibilityLabel={getAccessibilityLabel}
+                getAccessible={getAccessible}
+                getLabelText={getLabelText}
+                getTestID={getTestID}
+                renderBadge={renderBadge}
+                renderIcon={renderIcon}
+                renderLabel={renderLabel}
+                activeColor={activeColor}
+                inactiveColor={inactiveColor}
+                pressColor={pressColor}
+                pressOpacity={pressOpacity}
+                onPress={() => {
+                  onTabPress && onTabPress({ route })
+                  this.props.jumpTo(route.key)
+                }}
+                onLongPress={() => onTabLongPress && onTabLongPress({ route })}
+                labelStyle={labelStyle}
+                style={tabStyle}
+              />
+            </div>
           ))}
-        </ScrollView>
+        </Swiper>
       </View>
     )
   }

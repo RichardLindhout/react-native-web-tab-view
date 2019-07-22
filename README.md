@@ -1,5 +1,7 @@
 A cross-platform Tab View component for React Native (web). It's a really nice abstraction on the web and uses https://idangero.us/swiper/ so even switching betweens screens work with touch!
 
+The api works the same as react-native-tab-view, however not all settings are available on the web ;)
+
 
 Please do a pull request for missing features.
 
@@ -11,7 +13,8 @@ Please do a pull request for missing features.
 Follow instructions for a working native variant at: https://github.com/react-native-community/react-native-tab-view
 
 ## react-native-web-tab-view
-`yarn add react-id-swiper@latest swiper@latest`
+`yarn add react-id-swiper@latest swiper@latest`   
+
 `yarn add https://github.com/RichardLindhout/react-native-web-tab-view`
 
 Add this to your public/index.html

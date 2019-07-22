@@ -2,31 +2,11 @@ import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 export default class TabBarIndicator extends React.Component {
-  //   componentDidMount() {
-  //     this.fadeInIndicator()
-  //   }
-
-  //   componentDidUpdate() {
-  //     this.fadeInIndicator()
-  //   }
-
   render() {
-    const { style } = this.props
+    const { style, isActive } = this.props
 
     return (
-      <View
-        style={[
-          styles.indicator,
-          // If layout is not available, use `left` property for positioning the indicator
-          // This avoids rendering delay until we are able to calculate translateX
-          //   { width: indicatorWidth },
-          //   layout.width
-          //     ? { transform: [{ translateX }] }
-          //     : { left: `${(100 / routes.length) * navigationState.index}%` },
-          //   width === 'auto' ? { opacity: this.opacity } : null,
-          style,
-        ]}
-      />
+      <View style={[styles.indicator, { opacity: isActive ? 1 : 0 }, style]} />
     )
   }
 }
