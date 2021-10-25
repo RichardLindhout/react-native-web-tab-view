@@ -55,6 +55,7 @@ export default class TabBar extends React.Component {
       labelStyle,
       // indicatorStyle,
       style,
+      swipeEnabled = true,
     } = this.props
     const { routes } = navigationState
 
@@ -109,7 +110,7 @@ export default class TabBar extends React.Component {
     }
 
     // console.log('NAVIGATIONSTATE',navigationState.index)
-    return (
+    return swipeEnabled ? (
       <View style={[styles.tabBar, style]}>
         <Swiper params={swiperParams} ref={this._onRef}>
           {routes.map((route, tabIndex) => (
@@ -141,6 +142,37 @@ export default class TabBar extends React.Component {
             </div>
           ))}
         </Swiper>
+      </View>
+    ) : (
+      <View style={[styles.tabBar, style]}>
+          {routes.map((route, tabIndex) => (
+            <div key={route.key} className="swiper-tab-item">
+              <TabBarItem
+                tabIndex={tabIndex}
+                position={position}
+                route={route}
+                navigationState={navigationState}
+                getAccessibilityLabel={getAccessibilityLabel}
+                getAccessible={getAccessible}
+                getLabelText={getLabelText}
+                getTestID={getTestID}
+                renderBadge={renderBadge}
+                renderIcon={renderIcon}
+                renderLabel={renderLabel}
+                activeColor={activeColor}
+                inactiveColor={inactiveColor}
+                pressColor={pressColor}
+                pressOpacity={pressOpacity}
+                onPress={() => {
+                  onTabPress && onTabPress({ route })
+                  this.props.jumpTo(route.key)
+                }}
+                onLongPress={() => onTabLongPress && onTabLongPress({ route })}
+                labelStyle={labelStyle}
+                style={tabStyle}
+              />
+            </div>
+          ))}
       </View>
     )
   }
