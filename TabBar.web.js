@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
       width: 0,
     },
     zIndex: 1,
+    flexDirection: 'row',
   },
   tabContent: {
     flexDirection: 'row',
