@@ -66,6 +66,7 @@ class TabView extends React.Component {
     springConfig: {},
     timingConfig: {},
     gestureHandlerProps: {},
+    swipeEnabled: true,
   }
 
   _jumpToIndex = index => {
@@ -101,6 +102,7 @@ class TabView extends React.Component {
       renderTabBar,
       renderScene,
       style,
+      swipeEnabled,
     } = this.props
 
     const tabBarProps = {
@@ -108,7 +110,7 @@ class TabView extends React.Component {
       navigationState,
       tabViewRef: this.swiper,
     }
-    return (
+    return swipeEnabled ? (
       <View style={[styles.pager, style]}>
         {tabBarPosition === 'top' && renderTabBar(tabBarProps)}
 
@@ -125,6 +127,19 @@ class TabView extends React.Component {
             </div>
           ))}
         </Swiper>
+        {tabBarPosition === 'bottom' && renderTabBar(tabBarProps)}
+      </View>
+    ) : (
+      <View style={[styles.pager, style]}>
+        {tabBarPosition === 'top' && renderTabBar(tabBarProps)}
+          {navigationState.routes.map((route, i) => (
+            <div key={route.key} className="swiper-slide">
+              {renderScene({
+                jumpTo: this._jumpToKey,
+                route,
+              })}
+            </div>
+          ))}
         {tabBarPosition === 'bottom' && renderTabBar(tabBarProps)}
       </View>
     )
